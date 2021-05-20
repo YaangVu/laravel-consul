@@ -10,7 +10,7 @@ return [
     /**
      * Consul Token
      */
-    'token'  => env('CONSUL_token', ''),
+    'token'  => env('CONSUL_TOKEN', ''),
 
     /**
      * Consul keys list
