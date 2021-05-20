@@ -4,46 +4,67 @@
 namespace YaangVu\Consul;
 
 
-use SensioLabs\Consul\ServiceFactory;
-use SensioLabs\Consul\Services\KVInterface;
+use DCarbone\PHPConsulAPI\Config;
+use DCarbone\PHPConsulAPI\Consul;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 class ConsulClient
 {
-    public static $client;
+    public static Consul $consul;
 
     /**
      * ConsulClient constructor.
      *
      * @param string $uri
      * @param string $token
+     * @param string $scheme
+     * @param string $dc
      */
-    public function __construct(string $uri = "", string $token = "")
+    public function __construct(string $uri, string $token, string $scheme, string $dc)
     {
-        if (!$uri)
-            $uri = env('CONSUL_URI');
-        if (!$token)
-            $token = env('CONSUL_TOKEN');
-
-        $this->connect($uri, $token);
+        $this->connect($uri, $token, $scheme, $dc);
     }
 
-    private function connect(string $uri, string $token): void
+    /**
+     * @param string $key
+     *
+     * @return string
+     * @throws GuzzleException
+     */
+    public static function get(string $key): string
     {
-        $config = [
-            "base_uri"   => $uri,
-            "auth_basic" => "headers",
-            "headers"    => [
-                "X-Consul-Token" => $token
-            ],
-        ];
-
-        $sf = new ServiceFactory($config);
-
-        self::$client = $sf->get(KVInterface::class);
+        return self::$consul->KV->Get($key)->getValue()->Value;
     }
 
-    public static function get($key)
+    public static function set(string $key, string $value)
     {
-        return self::$client->get($key);
+        // Do later
+    }
+
+    /**
+     * @param string $uri
+     * @param string $token
+     * @param string $scheme
+     * @param string $dc
+     *
+     * @return $this
+     */
+    public function connect(string $uri, string $token, string $scheme = 'http', string $dc = 'dc1'): ConsulClient
+    {
+        $config = new Config(
+            [
+                'HttpClient' => new Client(),
+                'Address'    => $uri,
+                'Scheme'     => $scheme,
+                'Datacenter' => env('CONSUL_DC', 'dc1'),
+                'Token'      => $token,
+                'WaitTime'   => '0s',
+            ]
+        );
+
+        self::$consul = new Consul($config);
+
+        return $this;
     }
 }
