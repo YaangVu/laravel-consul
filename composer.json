@@ -1,0 +1,35 @@
+{
+  "name": "yaangvu/laravel-consul",
+  "description": "Laravel Consul",
+  "type": "library",
+  "keywords": [
+    "laravel",
+    "lumen",
+    "base",
+    "consul"
+  ],
+  "require": {
+    "php": "^8.0",
+    "sensiolabs/consul-php-sdk": "^4.1",
+    "illuminate/support": "^8.42"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Yaang Vu",
+      "email": "yaangvu@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "YaangVu\\Consul\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "YaangVu\\Consul\\ConsulProvider"
+      ]
+    }
+  }
+}
