@@ -34,11 +34,13 @@ class ConsulProvider extends ServiceProvider
      */
     public function register()
     {
-        if (file_exists(Constant::CONSUL_ENV_FILE))
+        if (file_exists(Constant::CONSUL_ENV_FILE)) {
+            $this->reloadEnv();
+
             return;
+        }
 
-//        $this->boot();
-
+        $this->boot();
         $uri     = config("consul.uri");
         $token   = config("consul.token");
         $reqKeys = config("consul.keys");
