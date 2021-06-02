@@ -18,7 +18,7 @@ class ConsulProvider extends ServiceProvider
      */
     public function boot()
     {
-        $file = __DIR__ . '/../../../../config/consul.php';
+        $file = $this->app->configPath('consul.php');
         if (!file_exists($file))
             $file = __DIR__ . '/consul.php';
 
@@ -83,7 +83,7 @@ class ConsulProvider extends ServiceProvider
     function reloadEnv()
     {
         (new LoadEnvironmentVariables(
-            dirname(dirname(dirname(dirname(__DIR__)))),
+            $this->app->basePath(),
             '.env.consul'
         ))->bootstrap();
     }
