@@ -58,7 +58,7 @@ class ConsulProvider extends ServiceProvider
         $envString = '';
 
         foreach ($reqKeys as $reqKey) {
-            $envString .= "#$reqKey";
+            $envString .= "# $reqKey \n";
             foreach ($resKeys as $resKey) {
                 if (Str::endsWith($resKey, '/') || !Str::startsWith($resKey, $reqKey))
                     continue;
