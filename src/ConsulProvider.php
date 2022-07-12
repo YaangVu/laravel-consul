@@ -23,6 +23,8 @@ class ConsulProvider extends ServiceProvider
             $file = __DIR__ . '/consul.php';
 
         $this->mergeConfigFrom($file, 'consul');
+
+        $this->publishConfig();
     }
 
     /**
