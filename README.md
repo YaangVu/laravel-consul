@@ -49,3 +49,12 @@ CONSUL_SCHEME=${CONSUL_SCHEME}
 CONSUL_DC=${CONSUL_DC}
 CONSUL_PATH=${CONSUL_PATH}
 ```
+
+Add any Key Folder Consul you want to be loaded
+
+```php
+'keys'   => [
+        // 'foo',
+        // 'bar'
+    ],
+```
