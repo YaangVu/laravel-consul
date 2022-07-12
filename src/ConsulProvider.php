@@ -5,9 +5,9 @@ namespace YaangVu\Consul;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use Laravel\Lumen\Bootstrap\LoadEnvironmentVariables;
 
 class ConsulProvider extends ServiceProvider
 {
@@ -83,9 +83,28 @@ class ConsulProvider extends ServiceProvider
 
     function reloadEnv()
     {
-        (new LoadEnvironmentVariables(
-            $this->app->basePath(),
-            '.env.consul'
-        ))->bootstrap();
+        if (app() instanceof Illuminate\Foundation\Application) // If is Laravel instance
+            (new \Illuminate\Foundation\BootstrapLoadEnvironmentVariables(
+                $this->app->basePath(),
+                '.env.consul'
+            ))->bootstrap();
+        else if ((app() instanceof \Laravel\Lumen\Application)) // If is Lumen Instance
+            (new \Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
+                $this->app->basePath(),
+                '.env.consul'
+            ))->bootstrap();
+        else
+            Log::error("Can not load consul environment");
+    }
+
+    private function publishConfig()
+    {
+        $path = $this->getConfigPath();
+        $this->publishes([$path => config_path('consul.php')], 'config');
+    }
+
+    private function getConfigPath(): string
+    {
+        return __DIR__ . '/consul.php';
     }
 }
