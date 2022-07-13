@@ -36,7 +36,7 @@ class ConsulProvider extends ServiceProvider
      */
     public function register()
     {
-        if (file_exists(Constant::CONSUL_ENV_FILE)) {
+        if (file_exists(base_path(Constant::CONSUL_ENV_FILE))) {
             $this->reloadEnv();
 
             return;
@@ -102,7 +102,8 @@ class ConsulProvider extends ServiceProvider
     private function publishConfig()
     {
         $path = $this->getConfigPath();
-        $this->publishes([$path => config_path('consul.php')], 'config');
+        if (app() instanceof Illuminate\Foundation\Application) // If is Laravel instance
+            $this->publishes([$path => config_path('consul.php')], 'config');
     }
 
     private function getConfigPath(): string
