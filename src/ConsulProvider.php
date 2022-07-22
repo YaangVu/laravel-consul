@@ -112,7 +112,7 @@ class ConsulProvider extends ServiceProvider
     function reloadEnv()
     {
         if (app() instanceof \Illuminate\Foundation\Application) // If is Laravel instance
-            app()->loadEnvironmentFrom($this->envPath);
+            app()->loadEnvironmentFrom(Constant::CONSUL_ENV_FILE);
         else if ((app() instanceof \Laravel\Lumen\Application)) // If is Lumen Instance
             (new LoadEnvironmentVariables($this->app->basePath(), Constant::CONSUL_ENV_FILE))->bootstrap();
         else
