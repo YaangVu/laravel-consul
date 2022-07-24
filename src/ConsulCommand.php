@@ -55,6 +55,8 @@ class ConsulCommand extends Command
      */
     public function handle(): void
     {
+        echo "Starting get env from Consul ..................................................................\n";
+
         $env = File::get($this->envPath);
 
         $env = $this->_deleteOldEnv($env);
@@ -66,7 +68,7 @@ class ConsulCommand extends Command
         foreach ($this->needKeys as $needKey) {
             $needKey             = trim($needKey, '/');
             $this->directories[] = "$needKey";
-            $envConsul           .= "# /$needKey/ \n";
+            $envConsul           .= "# $needKey/ \n";
             foreach ($consulKeys as $consulKey) {
                 $envConsul = $this->_genEnvString($needKey, $consulKey, $envConsul, $this->recursive);
             }
@@ -78,7 +80,7 @@ class ConsulCommand extends Command
 
         $this->putEnvironmentToDotEnv($this->envPath, $env);
 
-        dd($this->directories);
+        echo "Finished get env from Consul ..................................................................\n";
     }
 
     public function putEnvironmentToDotEnv(string $file, string $env, $mode = FILE_APPEND | LOCK_EX)
