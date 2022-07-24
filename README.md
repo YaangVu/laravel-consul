@@ -48,6 +48,7 @@ CONSUL_TOKEN=${CONSUL_TOKEN}
 CONSUL_SCHEME=${CONSUL_SCHEME}
 CONSUL_DC=${CONSUL_DC}
 CONSUL_PATH=${CONSUL_PATH}
+CONSUL_RECURSIVE=true
 ```
 
 Add any Key Folder Consul you want to be loaded
@@ -57,4 +58,9 @@ Add any Key Folder Consul you want to be loaded
         // 'foo',
         // 'bar'
     ],
+```
+
+## Get env from Consul
+```shell
+php artisan yaangvu:consul
 ```
