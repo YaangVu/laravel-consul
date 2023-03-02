@@ -9,9 +9,9 @@
     "consul"
   ],
   "require": {
-    "illuminate/support": "^7|^8|^9",
+    "illuminate/support": "^7|^8|^9|^10",
     "dcarbone/php-consul-api": "^1.0",
-    "illuminate/console": "^7|^8|^9"
+    "illuminate/console": "^7|^8|^9|^10"
   },
   "license": "MIT",
   "authors": [
