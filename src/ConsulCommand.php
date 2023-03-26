@@ -68,7 +68,7 @@ class ConsulCommand extends Command
         foreach ($this->needKeys as $needKey) {
             $needKey             = trim($needKey, '/');
             $this->directories[] = "$needKey";
-            $envConsul           .= "# $needKey/ \n";
+            $envConsul           .= "\n# $needKey/ \n";
             foreach ($consulKeys as $consulKey) {
                 $envConsul = $this->_genEnvString($needKey, $consulKey, $envConsul, $this->recursive);
             }
